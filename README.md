@@ -27,10 +27,10 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### Step 2 (Setup for forntend):
+### Step 2 (Setup for frontend):
 Install dependencies
 ```bash 
-cd forntend
+cd frontend
 
 npm install
 ```
