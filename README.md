@@ -35,7 +35,7 @@ cd forntend
 npm install
 ```
 
-Start the react forntend
+Start the react frontend
 ```bash
 npm start
 ```

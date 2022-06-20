@@ -10,3 +10,5 @@ backend/app/profile/migrations
 # React frontend
 frontend/node_modules
 frontend/build
+
+doc.txt
