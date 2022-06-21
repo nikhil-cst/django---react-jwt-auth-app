@@ -12,3 +12,18 @@ frontend/node_modules
 frontend/build
 
 doc.txt
+
+frontend-mobile/node_modules
+frontend-mobile/.expo/
+frontend-mobile/dist/
+frontend-mobile/npm-debug.*
+frontend-mobile/*.jks
+frontend-mobile/*.p8
+frontend-mobile/*.p12
+frontend-mobile/*.key
+frontend-mobile/*.mobileprovision
+frontend-mobile/*.orig.*
+frontend-mobile/web-build/
+
+# macOS
+frontend-mobile/.DS_Store
