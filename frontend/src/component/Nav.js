@@ -6,6 +6,7 @@ import { apiCall } from '../_apiConfig/Apicall';
 export const Nav = () => {
   const navigate = useNavigate()
   const { logout, authenticated } = useAuth()
+  const auth = localStorage.getItem('auth')
 
   const handleLogout = async () => {
     const header = new Headers()
@@ -44,7 +45,7 @@ export const Nav = () => {
               <li className="nav-item">
                 <NavLink activeClassName='active' className="nav-link" to="/about">About</NavLink>
               </li>
-              {authenticated ? (
+              {auth ? (
                 <li className="nav-item">
                   <Link activeClassName='active' className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
                 </li>
