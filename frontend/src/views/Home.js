@@ -1,13 +1,14 @@
 import React from 'react'
-import { useAuth } from '../useAuth'
-
+import useAuth from '../useAuth'
 export const Home = () => {
-  const { authenticated } = useAuth()
+  const { userDetails } = useAuth()
+
+  const user = userDetails()
 
   return (
     <div className='container mt-4'>
-      {authenticated ?(
-        <div>Home {authenticated.firstName}{' '}{authenticated.lastName}</div>
+      {user ?(
+        <div>Home {user.firstName}{' '}{user.lastName}</div>
       ):(
         <div>Home</div>
       )}

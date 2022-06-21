@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../useAuth'
+import useAuth from '../useAuth'
+// import { useAuth } from '../useAuth'
 import { apiCall } from '../_apiConfig/Apicall'
 
 export const Login = () => {
@@ -12,7 +13,7 @@ export const Login = () => {
 
   const { login } = useAuth()
 
-  if (localStorage.getItem('auth')) {
+  if (localStorage.getItem('user')) {
     navigate('/')
   }
 
@@ -42,11 +43,12 @@ export const Login = () => {
         refreshToken: jsonobj.refreshToken,
       }
       login(details)
+      navigate('/')
     }
   }
 
   return (
-    <div className='container'>
+    <div className='container mt-4'>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email address</label>

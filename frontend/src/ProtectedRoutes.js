@@ -1,11 +1,13 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import useAuth from './useAuth'
 // import { useAuth } from './useAuth'
 
 export const ProtectedRoutes = () =>{
   // const { authenticated } = useAuth()
+  const { userDetails } = useAuth()
 
-  const auth = localStorage.getItem('auth')
+  const user = userDetails()
 
-  return (auth ? <Outlet /> : <Navigate to ='/login' />)
+  return (user ? <Outlet /> : <Navigate to ='/login' />)
 }

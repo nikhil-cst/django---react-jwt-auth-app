@@ -1,14 +1,7 @@
-import { createContext, useContext, useState } from "react";
-var CryptoJS = require('crypto-js')
+import { useNavigate } from "react-router-dom"
 
-const AuthContext = createContext(null)
-
-export const AuthProvider = ({children}) =>{
-    const [authenticated, setauthenticated] = useState(null)
-
-    var ciphertext = (data) => CryptoJS.AES.encrypt(JSON.stringify(data), 'secret@cst.com').toString()
-    var bytes = (data) => CryptoJS.AES.decrypt(data, 'secret@cst.com')
-    var decryptedData = (data) => JSON.parse(data.toString(CryptoJS.enc.Utf8))
+const useAuth = () => {
+    const navigate = useNavigate()
 
     const login = (details) =>{
         let data = {
@@ -19,23 +12,55 @@ export const AuthProvider = ({children}) =>{
             accessToken: details.accessToken,
             refreshToken: details.refreshToken,
         }
-        setauthenticated(data)
-        // localStorage.setItem('auth', JSON.stringify(data))
-        localStorage.setItem('auth', ciphertext(data))
+        localStorage.setItem('user', JSON.stringify(data))
     }
 
     const logout = () =>{
-        setauthenticated(null)
-        localStorage.removeItem('auth')
+        localStorage.removeItem('user')
+        navigate('/login')
     }
 
-    return (
-        <AuthContext.Provider value={{ authenticated, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    )
+    const userDetails = () =>{
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    return { login, logout, userDetails }
 }
 
-export const useAuth = () =>{
-    return useContext(AuthContext)
-}
+export default useAuth
+
+// import { createContext, useContext, useState } from "react";
+
+// const AuthContext = createContext(null)
+
+// export const AuthProvider = ({children}) =>{
+//     const [user, setUser] = useState(null)
+
+//     const login = (details) =>{
+//         let data = {
+//             userId: details.userId,
+//             firstName: details.firstName,
+//             lastName: details.lastName,
+//             email: details.email,
+//             accessToken: details.accessToken,
+//             refreshToken: details.refreshToken,
+//         }
+//         setUser(data)
+//         localStorage.setItem('auth', JSON.stringify(data))
+//     }
+
+//     const logout = () =>{
+//         setUser(null)
+//         localStorage.removeItem('auth')
+//     }
+
+//     return (
+//         <AuthContext.Provider value={{ user, login, logout }}>
+//             {children}
+//         </AuthContext.Provider>
+//     )
+// }
+
+// export const useAuth = () =>{
+//     return useContext(AuthContext)
+// }

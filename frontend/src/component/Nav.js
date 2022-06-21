@@ -1,31 +1,28 @@
 import React from 'react'
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from '../useAuth';
+import { Link, NavLink } from "react-router-dom";
+import useAuth from '../useAuth';
 import { apiCall } from '../_apiConfig/Apicall';
 
 export const Nav = () => {
-  const navigate = useNavigate()
-  const { logout, authenticated } = useAuth()
-  const auth = localStorage.getItem('auth')
+  const { logout, userDetails } = useAuth()
+  const user = userDetails()
 
   const handleLogout = async () => {
     const header = new Headers()
     header.append('Content-Type', 'application/json')
-    header.append('Authorization', 'Bearer ' + authenticated.accessToken)
+    header.append('Authorization', 'Bearer ' + user.accessToken)
 
     const response = await apiCall(
       'accounts-api/logout/',
       'POST',
       header,
       JSON.stringify({
-        refresh: authenticated.refreshToken,
+        refresh: user.refreshToken,
       }),
     )
 
     if (response.status === 200) {
-      logout(() => {
-        navigate('/login')
-      })
+      logout()
     }
   }
 
@@ -41,21 +38,25 @@ export const Nav = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <NavLink activeClassName='active' className="nav-link" to="/">Home</NavLink>
+                {/* <Link className="nav-link" to="/">Home</Link> */}
               </li>
               <li className="nav-item">
                 <NavLink activeClassName='active' className="nav-link" to="/about">About</NavLink>
+                {/* <Link className="nav-link" to="/about">About</Link> */}
               </li>
-              {auth ? (
+              {user ? (
                 <li className="nav-item">
-                  <Link activeClassName='active' className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
+                  <Link className="nav-link" to="/" onClick={handleLogout}>Logout</Link>
                 </li>
               ) : (
                 <>
                   <li className="nav-item">
                     <NavLink activeClassName='active' className="nav-link" to="/login">Login</NavLink>
+                    {/* <Link className="nav-link" to="/login">Login</Link> */}
                   </li>
                   <li className="nav-item">
                     <NavLink activeClassName='active' className="nav-link" to="/signup">Signup</NavLink>
+                    {/* <Link className="nav-link" to="/signup">Signup</Link> */}
                   </li>
                 </>
               )
